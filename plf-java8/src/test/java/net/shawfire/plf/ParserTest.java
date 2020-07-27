@@ -107,5 +107,5 @@ public class ParserTest {
         Assert.assertEquals("Unexpected most active IP count returned",
                 new Integer(3), actualMostActiveIPCount.get("177.71.128.21"));
     }
-    
+
 }

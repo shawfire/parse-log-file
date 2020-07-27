@@ -69,6 +69,18 @@ public class App {
 
 </details>
 
+<details><summary>Main App / Test Logger Output</summary>
+
+- The Main App and the Unit tests produce the same logging output.
+
+```
+0    [main] INFO  net.shawfire.plf.Parser  - Number of unique IP addresses: 4
+79   [main] INFO  net.shawfire.plf.Parser  - The top 3 most visited URLs: [/docs/manage-websites/, /blog/2018/08/survey-your-opinion-matters/, /newsletter/]
+79   [main] INFO  net.shawfire.plf.Parser  - The top 3 most active IP addresses: [168.41.191.40, 50.112.00.11, 177.71.128.21]
+```
+
+</details>
+
 <details><summary>Parse Class</summary>
 
 ```java

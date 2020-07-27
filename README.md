@@ -3,7 +3,7 @@
 Parse Log File Project
 
 - [Requirements: programming-task.pdf](./programming-task.pdf)
-- [Java 8 Maven Project Solution ./plf-java/README.md](./plf-java8/README.md)
+- [Java 8 Maven Project Solution ./plf-java8/README.md](./plf-java8/README.md)
 
 <details><summary>Regular expression parsing</summary>
 
