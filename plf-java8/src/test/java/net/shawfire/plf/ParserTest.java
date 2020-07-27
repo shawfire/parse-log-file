@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 public class ParserTest {
@@ -16,11 +18,16 @@ public class ParserTest {
                 "177.71.128.21 - - [10/Jul/2018:22:21:28 +0200] " +
                 "\"GET /intranet-analytics/ HTTP/1.1\" 200 3574 \"-\" " +
                 "\"Mozilla/5.0 (X11; U; Linux x86_64; fr-FR) AppleWebKit/534.7 (KHTML, like Gecko) Epiphany/2.30.6 Safari/534.7\"");
-        String[] expectedFields = {""};
+        String[] expectedFields = {
+                "177.71.128.21", "-", "-", "[10/Jul/2018:22:21:28 +0200]",
+                "\"GET /intranet-analytics/ HTTP/1.1\"", "200", "3574", "\"-\"",
+                "\"Mozilla/5.0 (X11; U; Linux x86_64; fr-FR) AppleWebKit/534.7 (KHTML, like Gecko) Epiphany/2.30.6 Safari/534.7\""
+        };
         Assert.assertEquals("Unexpected number of fields parsed. ", expectedFields.length, actualFields.length);
         for (int i = 0; i < expectedFields.length; i++) {
             Assert.assertEquals(String.format("line %1$s: ", i), expectedFields[i], actualFields[i]);
         }
+        Assert.assertEquals("/intranet-analytics/" ,parser.parseUrl(actualFields[4]));
     }
 
     @Test
@@ -53,8 +60,52 @@ public class ParserTest {
         Parser parser = new Parser();
         for (int i=0; i < logRecords.length; i++) {
             String[] actualFields = parser.parse(logRecords[i]);
-            Assert.assertEquals("Unexpected number of fields parsed. ", 9, actualFields.length);
+            Assert.assertTrue("Unexpected number of fields parsed. ", actualFields.length >= 9);
         }
+        // TEST FIRST REQUIREMENT: The number of unique IP addresses
+        int expectedNumberOfUniqueURLs = 4;
+        Assert.assertEquals("Unexpected number of unique URLs",
+                expectedNumberOfUniqueURLs, parser.getNumberOfUniqueUrls());
 
+        // TEST SECOND REQUIREMENT: The top 3 most visited URLs
+        int limit = 3;
+        String[] actualMostVisitedURLs = parser.getMostVisitedURLs(limit);
+        Assert.assertEquals("Unexpected number of URLs returned",
+                limit, actualMostVisitedURLs.length);
+        Assert.assertEquals("Unexpected most visited URLs returned",
+                "/docs/manage-websites/", actualMostVisitedURLs[0]);
+        Assert.assertEquals("Unexpected most visited URLs returned",
+                "/blog/2018/08/survey-your-opinion-matters/", actualMostVisitedURLs[1]);
+
+        Map<String, Integer> actualMostVisitedURLsCounts = parser.getMostVisitedURLsCounts(limit);
+        Assert.assertEquals("Unexpected number of unique URLs counts returned",
+                limit, actualMostVisitedURLsCounts.size());
+        Assert.assertEquals("Unexpected most visited URL count returned",
+                new Integer(2), actualMostVisitedURLsCounts.get("/docs/manage-websites/"));
+        Assert.assertEquals("Unexpected most visited URL count returned",
+                new Integer(1), actualMostVisitedURLsCounts.get("/blog/2018/08/survey-your-opinion-matters/"));
+
+
+        // TEST THIRD REQUIREMENT: The top 3 most active addresses
+        String[] actualMostActiveIPs = parser.getMostActiveIPs(limit);
+        Assert.assertEquals("Unexpected number of unique IPs returned",
+                limit, actualMostActiveIPs.length);
+        Assert.assertEquals("Unexpected most active IP returned",
+                "168.41.191.40", actualMostActiveIPs[0]);
+        Assert.assertEquals("Unexpected 2nd most active IP returned",
+                "50.112.00.11", actualMostActiveIPs[1]);
+        Assert.assertEquals("Unexpected 3rd most active IP returned",
+                "177.71.128.21", actualMostActiveIPs[2]);
+
+        Map<String, Integer> actualMostActiveIPCount = parser.getMostActiveIPCounts(limit);
+        Assert.assertEquals("Unexpected number of unique URLs counts returned",
+                limit, actualMostVisitedURLsCounts.size());
+        Assert.assertEquals("Unexpected most active IP count returned",
+                new Integer(4), actualMostActiveIPCount.get("168.41.191.40"));
+        Assert.assertEquals("Unexpected most active IP count returned",
+                new Integer(3), actualMostActiveIPCount.get("50.112.00.11"));
+        Assert.assertEquals("Unexpected most active IP count returned",
+                new Integer(3), actualMostActiveIPCount.get("177.71.128.21"));
     }
+    
 }

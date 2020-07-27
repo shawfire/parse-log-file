@@ -1,31 +1,35 @@
 # parse-log-file
 
+Parse Log File Project
+
+- [Requirements: programming-task.pdf](./programming-task.pdf)
+- [Java 8 Maven Project Solution ./plf-java/README.md](./plf-java8/README.md)
+
 <details><summary>Regular expression parsing</summary>
 
 [Online regular expression parsing](https://regex101.com/)
 
-- expample line in log file
+- Extract from [`./plf-java8/src/main/java/net/shawfire/plf/Parser.java`](./plf-java8/src/main/java/net/shawfire/plf/Parser.java)
 
-```
-177.71.128.21 - - [10/Jul/2018:22:21:28 +0200] "GET /intranet-analytics/ HTTP/1.1" 200 3574 "-" "Mozilla/5.0 (X11; U; Linux x86_64; fr-FR) AppleWebKit/534.7 (KHTML, like Gecko) Epiphany/2.30.6 Safari/534.7"
-```
+```java
+    /**
+     * Allow for three types of fields
+     *  1. A field enclosed in square brackets
+     *     "\[[^\]]*\]" - Match "[" - then a chars other than "]" terminate field with "]"
+     *     note: the pipe character "|" signifies an "or" another type of field
+     *  2. A field enclosed in double quotes
+     *     "\"[^"]*" -  Match `"` - then a chars other than `"` terminate field with `"`
+     *  3. A field that does not contain a space
+     *     [^ ]*)* - Match a field that does not contain spaces
+     */
+    private static final String FIELD_REGEX = "(\\[[^\\]]*\\]|\"[^\"]*\"|[^ ]*)*";
 
-- match with ip address and anything else
-
-```regex
-^(\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b)?.*$
-```
-
-- Just separate into fields
-  - fields separated by spaces
-  - fields contained in [] or ""
-
-```regex
-((\[[^\]]*\])|("[^"]*")|([^ ]*))*
-```
-
-```regex
-(\[[^\]]*\]|"[^"]*"|[^ ]*)*
+    /**
+     * "[^\\/]* " - Match prefix chars other than "/" followed by a space (e.g. "GET ")
+     * "([^ ]*)"  = Match URL chars other than space " " (e.g. "http://google.com" or "/google.com")
+     * ".*" - Math suffix other characters other than the URL (e.g. " HTTP/1.1")
+     */
+    private static final String URL_REGEX = "[^\\/]* ([^ ]*).*";
 ```
 
 </details>
