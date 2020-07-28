@@ -3,12 +3,15 @@ package net.shawfire.plf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Parser {
+
+    public static String FileNameFoundMsg = "File [%1$s] is not found.";
 
     private static Logger logger = LoggerFactory.getLogger(Parser.class);
 
@@ -133,6 +136,35 @@ public class Parser {
     Map<String, Integer> getMostVisitedURLsCounts(int limit) {
         Map<String, Integer> mostVisitedURLCounts = sortByValue(urlCount, limit);
         return mostVisitedURLCounts;
+    }
+
+    public void readFromInputStream(InputStream inputStream)
+            throws IOException {
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null && (line = line.trim()).length() != 0) {
+                parse(line);
+            }
+        }
+        finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void readFromInputStream(String fileName)
+            throws IOException {
+        InputStream inputStream = Parser.class.getResourceAsStream(fileName);
+        if (inputStream == null) {
+            throw new FileNotFoundException(String.format(FileNameFoundMsg, fileName));
+        }
+        readFromInputStream(inputStream);
     }
 
 }
