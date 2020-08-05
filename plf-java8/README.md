@@ -35,9 +35,9 @@
 
 </details>
 
-<details><summary>Parse Class</summary>
+<details><summary>Parser Class</summary>
 
-[Parse class which reads the logFile and parses it accordingly](./src/main/java/net/shawfire/plf/Parser.java)
+[Parser class which reads the logFile and parses it accordingly](./src/main/java/net/shawfire/plf/Parser.java)
 
 </details>
 
