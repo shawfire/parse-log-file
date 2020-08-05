@@ -32,18 +32,18 @@ public class StubApp {
 
         Parser parser = new Parser();
         for (int i=0; i < logRecords.length; i++) {
-            parser.parse(logRecords[i]);
+            parser.parseLine(logRecords[i]);
         }
 
         // FIRST REQUIREMENT: The number of unique IP addresses
-        parser.getNumberOfUniqueUrls();
+        parser.getIpAddressParser().getNumberOfIPs();
 
         // SECOND REQUIREMENT: The top 3 most visited URLs
         int limit = 3;
-        parser.getMostVisitedURLs(limit);
+        parser.getUrlParser().getMostVisitedURLs(limit);
 
         // THIRD REQUIREMENT: The top 3 most active addresses
-        parser.getMostActiveIPs(limit);
+        parser.getIpAddressParser().getMostActiveIPs(limit);
 
     }
 

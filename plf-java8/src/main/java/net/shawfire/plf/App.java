@@ -59,14 +59,14 @@ public class App {
         parser.readFromInputStream(getFileName());
 
         // FIRST REQUIREMENT: The number of unique IP addresses
-        parser.getNumberOfUniqueUrls();
+        parser.getIpAddressParser().getNumberOfIPs();
 
         // SECOND REQUIREMENT: The top 3 most visited URLs
         int limit = 3;
-        parser.getMostVisitedURLs(limit);
+        parser.getUrlParser().getMostVisitedURLs(limit);
 
         // THIRD REQUIREMENT: The top 3 most active addresses
-        parser.getMostActiveIPs(limit);
+        parser.getIpAddressParser().getMostActiveIPs(limit);
 
     }
 

@@ -41,6 +41,24 @@
 
 </details>
 
+<details><summary>IP Address Parser Class </summary>
+
+[IP Address Parser class which contains all the logic specific to parsing and reporting IP Addresses](./src/main/java/net/shawfire/plf/IPAddressParser.java)
+
+</details>
+
+<details><summary>URL Parser Class </summary>
+
+[URL Parser class which contains all the logic specific to parsing and reporting URLs](./src/main/java/net/shawfire/plf/UrlParser.java)
+
+</details>
+
+<details><summary>Parser Utils Class </summary>
+
+[Parser Utils class which contains generic static pure parsing functions](./src/main/java/net/shawfire/plf/ParserUtils.java)
+
+</details>
+
 <details><summary>Parse Class Tests</summary>
 
 [ParseTest class which contains Parse class JUnit4 tests](./src/test/java/net/shawfire/plf/ParserTest.java)
@@ -65,7 +83,11 @@
      *     [^ ]*)* - Match a field that does not contain spaces
      */
     private static final String FIELD_REGEX = "(\\[[^\\]]*\\]|\"[^\"]*\"|[^ ]*)*";
+```
 
+- Extract from [`src/main/java/net/shawfire/plf/IPAddressParser.java`](./src/main/java/net/shawfire/plf/IPAddressParser.java)
+
+```java
     /**
      * "[^\\/]* " - Match prefix chars other than "/" followed by a space (e.g. "GET ")
      * "([^ ]*)"  = Match URL chars other than space " " (e.g. "http://google.com" or "/google.com")
