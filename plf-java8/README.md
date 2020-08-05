@@ -8,7 +8,7 @@
   - There is more debug logging, but this is currently switched off.
 - An App class is included which
   - instantiates `Parser` (`parser`)
-  - parses each log file line via `parser.parse(logFileLineString)`
+  - parses each log file line via `parser.parseLine(logFileLineString)`
   - then each of the routines are called to produce the solution output via info log messages
 
 <details><summary>Main App</summary>
