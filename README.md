@@ -9,7 +9,7 @@ Parse Log File Project
 
 [Online regular expression parsing](https://regex101.com/)
 
-- Extract from [`./plf-java8/src/main/java/net/shawfire/plf/Parser.java`](./plf-java8/src/main/java/net/shawfire/plf/Parser.java)
+- Extract from [`src/main/java/net/shawfire/plf/Parser.java`](./src/main/java/net/shawfire/plf/Parser.java)
 
 ```java
     /**
@@ -23,7 +23,11 @@ Parse Log File Project
      *     [^ ]*)* - Match a field that does not contain spaces
      */
     private static final String FIELD_REGEX = "(\\[[^\\]]*\\]|\"[^\"]*\"|[^ ]*)*";
+```
 
+- Extract from [`src/main/java/net/shawfire/plf/IPAddressParser.java`](./src/main/java/net/shawfire/plf/IPAddressParser.java)
+
+```java
     /**
      * "[^\\/]* " - Match prefix chars other than "/" followed by a space (e.g. "GET ")
      * "([^ ]*)"  = Match URL chars other than space " " (e.g. "http://google.com" or "/google.com")
